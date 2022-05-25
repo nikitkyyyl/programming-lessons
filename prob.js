@@ -1,24 +1,11 @@
-const http = require("http");
-
-const requestHandler = (request, response) => {
-    console.log("Url: " + request.url);
-    console.log("Тип запроса: " + request.method);
-    console.log("User-Agent: " + request.headers["user-agent"]);
-    console.log("Все заголовки");
-    console.log(request.headers);
-    response.end('rabotaet');
-};
-http.createServer(requestHandler).listen(3000);
 const express = require('express');
 const app = express();
 app.set('port', process.env.PORT || 3000);
-// пользовательская страница 404
 app.use(function (req, res) {
     res.type('text/plain');
     res.status(404);
     res.send('404 — Не найдено');
 });
-// пользовательская страница 500
 app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.type('text/plain');
@@ -37,19 +24,9 @@ app.get('/about', function (req, res) {
     res.type('text/plain');
     res.send('О главной странице');
 });
-// пользовательская страница 404
 app.use(function (req, res, next) {
     res.type('text/plain');
     res.status(404);
     res.send('404 — Не найдено');
 });
-app.get('/about*', function (req, res) {
-    // отправляем контент...
-})
-app.get('/about/contact', function (req, res) {
-    // отправляем контент...
-})
-app.get('/about/directions', function (req, res) {
-    // отправляем контент...
-})
-app.use(express.static(__dirname + '/public'));
+
